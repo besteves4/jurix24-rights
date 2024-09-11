@@ -1,0 +1,1 @@
+# jurix24-rights

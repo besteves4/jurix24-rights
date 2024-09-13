@@ -15,13 +15,13 @@
 \begin{frontmatter}          % The preamble begins here.
 %
 %\pretitle{}
-\title{}
+\title{I Know My Rights: Making GDPR Rights Machine-Interpretable and Exercisable}
 \runningtitle{}
 %\subtitle{}
 
 % For one author:
-\author{\fnms{} \snm{}}
-\address{}
+\author{\fnms{Beatriz} \snm{Esteves}}
+\address{IDLab, UGent -- imec}
 \runningauthor{}
 %
 % Two or more authors:
@@ -32,11 +32,11 @@
 %\address[B]{}
 %
 \begin{abstract}
-
+abstract
 \end{abstract}
 
 \begin{keyword}
-
+GDPR, rights exercise, rights management, DPV, ODRL
 \end{keyword}
 
 \end{frontmatter}
@@ -44,25 +44,72 @@
 \section{Introduction}
 \label{sec:intro}
 
+The General Data Protection Regulation (GDPR)~\cite{gdpr} grants data subjects a set of rights designed to protect their personal data and to ensure that they have greater control over how their data is collected, processed, and used by organizations.
+These rights include the right to access personal data, the right to rectification of inaccurate data, the right to erasure (commonly known as the ``right to be forgotten''), and the right to data portability, which allows individuals to ask for their data to be transferred between data controllers.
+Additionally, the GDPR provides rights to restrict processing, object to data use, and avoid automated decision-making.
+These rights, combined with the transparency and accountability measures imposed on organizations, aim to strike a balance between the interests of data subjects and the legitimate needs of businesses and institutions in the digital age.
+However, despite the comprehensive rights granted to individuals under regulations such as the GDPR, a `technological gap', i.e., a significant lack of efficient tools, for exercising these rights remains~\cite{bernes_enhancing_2022}.
+% some citations for the sentences below would be nice
+Many organizations struggle to provide accessible, user-friendly mechanisms for individuals to manage their personal data, often relying on cumbersome manual processes, which can lead to delays, or even non-compliance.
+For data subjects, the process of requesting access, rectification, or deletion of their data can be time-consuming, unclear, and inconsistent across different platforms.
+Additionally, there is a lack of standardisation in how organizations handle these requests, further complicating the process.
+Without more automated and streamlined tools, individuals face unnecessary barriers to effectively controlling their data, undermining the intent of regulations designed to empower them.
+
+In this context, we present a specification to express information regarding rights exercise and management in a machine-interpretable format, using semantic web standards such as RDF.
+In doing so, we begin to address the automation, interoperability and standardisation challenges identified above, towards enabling the development of tools for assisting individuals and organisations in right exercising activities. 
+Towards achieving this goal, we reuse and extend the Data Privacy Vocabulary~(DPV)~\cite{pandit2024dpv}, which allows the expression of information related to legislative requirements such as the GDPR.
+The developed extension provides a taxonomy to enable representing justifications associated with the non-fulfilment, non-requirement, delays, and exercising of processes, including rights exercising.
+Beyond DPV, the contributions in this article also promote the usage of the Open Digital Rights Language (ODRL)~\cite{iannella_odrl_2018}, Data Catalog (DCAT)~\cite{albertoni_dcat_2024}, DCMI Metadata~\cite{dcmi_2020}, and provenance (PROV)~\cite{lebo_prov_2013} ontologies to express information about 
+(i) linking personal data processing activities to applicable rights,
+(ii) providing notices related to said rights,
+(iii) documenting the exercise of rights, and
+(iv) GDPR rights requests.
+The resulting specification is being developed and published in the context of the W3C Data Privacy Vocabularies and Community Group (DPVCG).
+
+The remaining of the article is structured as follows: Section~\ref{sec:sota} provides background information on the used semantic technologies, as well as on existing rights protocols, Section~\ref{sec:rights} presents the developed specification to express applicable rights, notices, records of activities and rights requests, and Section~\ref{sec:conclusions} concludes and presents future directions of work.
+
 \section{Background and State of the Art}
 \label{sec:sota}
 
-- DPV
-- DCMI 
-- PROV
-- DCAT
-- ODRL
+- GDPR data subject rights
+
+- DPV~\cite{pandit2024dpv}
+- DCMI~\cite{dcmi_2020}
+- PROV~\cite{lebo_prov_2013}
+- DCAT~\cite{albertoni_dcat_2024}
+- ODRL~\cite{iannella_odrl_2018}
+- https://datarightsprotocol.org
 
 \section{Rights Exercise and Management}
 \label{sec:rights}
 
+Based on the GDPR provisions for data subject rights identified in Section 2, the following requirements are address in the proposed specification:
+
 \begin{itemize}
-    \item[Section 3.1.] Information about the existence of rights
-    \item[Section 3.2.] Justifications
-    \item[Section 3.3.] Notifications related to rights activities
-    \item[Section 3.4.] Records of rights activities
-    \item[Section 3.5.] GDPR-related rights requests as machine-executable policies
+    \item[\textbf{Section 3.1.}] Information about the existence of rights related to personal data processing activities
+    \item[\textbf{Section 3.2.}] Justifications for the exercising of rights
+    \item[\textbf{Section 3.3.}] Notices related to the fulfilment or non-fulfilment of rights
+    \item[\textbf{Section 3.4.}] Records of rights-related activities
+    \item[\textbf{Section 3.5.}] GDPR-related rights requests as machine-executable policies
 \end{itemize}
+
+The specification is available at \url{https://besteves4.github.io/dpv-rights-exercising} and includes examples for each requirement identified above, which are ommitted from this article due to size restrictions.
+
+\subsection{Applicable Data Subject Rights}
+\label{sec:applicable-rights}
+
+Beyond jurisdiction-dependence, applicable data subject rights also depend on the legal ground used to process personal data.
+In the case of the GDPR, DPV's GDPR extension\footnote{\url{https://w3id.org/dpv/legal/eu/gdpr}} contains the terms to represent the rights available under GDPR, as well as a mapping of which rights are applicable based on the used legal basis.
+As such, apart from detailing information about what personal data is being processed, how, where, by whom, and for what purpose, a \texttt{dpv:Process} can also be used to indicate applicable rights.
+Data controllers can use this approach to express which rights apply, including those beyond GDPR, such as the EU’s fundamental rights and rights outlined in other EU regulations or jurisdictions, i.e., the \texttt{dpv:hasScope} property can be used to indicate applicable rights by jurisdiction.
+
+\subsection{Justifications for the exercising of rights}
+\label{sec:justifications}
+
+As a result of the collection of requirements for GDPR rights exercising, a \texttt{Justification} taxonomy\footnote{\url{https://w3id.org/dpv/justifications}} to provide reasons or explanations related to processes, including rights, was developed.
+Examples of justifications include individual's identity not being verifiable or a request being considered overly excessive or burdensome.
+Justifications can also explain why certain processes are necessary or being delayed, such as the ground to exercise the right to object or requiring additional information to move forward with a process.
+To facilitate the expression of these detailed justifications, this extension introduces concepts that extend DPV's \texttt{Justification} concept.
 
 \section{Conclusions and Future Work}
 \label{sec:conclusions}

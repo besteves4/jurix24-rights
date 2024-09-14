@@ -6,37 +6,42 @@
 %\usepackage{mathptmx}
 %\usepackage[T1]{fontenc}
 %\usepackage{times}%
-%
-%%%%%%%%%%% Put your definitions here
+\usepackage{listings}
+\usepackage{minted}
+\setminted{frame=lines,
+    framesep=1mm,
+    fontsize=\fontsize{7}{8},
+    breaklines=true,
+    linenos
+    }
+ %% auto break lines   
+\lstset{breaklines=true}
 
-
-%%%%%%%%%%% End of definitions
 \begin{document}
 \begin{frontmatter}          % The preamble begins here.
 %
 %\pretitle{}
-\title{I Know My Rights: Making GDPR Rights Machine-Interpretable and Exercisable}
-\runningtitle{}
-%\subtitle{}
+\title{Delete My Data! Making GDPR Rights Machine-Interpretable and Exercisable}
+\runningtitle{I Know My Rights! Making GDPR Rights Machine-Interpretable and Exercisable}
+%\subtitle{Making GDPR Rights Machine-Interpretable and Exercisable}
 
-% For one author:
-\author{\fnms{Beatriz} \snm{Esteves}}
-\address{IDLab, UGent -- imec}
-\runningauthor{}
-%
-% Two or more authors:
-%\author[A]{\fnms{} \snm{}},
-%\author[B]{\fnms{} \snm{}}
-%\runningauthor{}
-%\address[A]{}
-%\address[B]{}
-%
+\author[A]{\fnms{Beatriz} \snm{Esteves}
+\thanks{Corresponding Author: Beatriz Esteves, \email{beatriz.esteves@ugent.be}.}},
+\author[B]{\fnms{Harshvardhan J.} \snm{Pandit}},
+\author[C]{\fnms{Georg P.} \snm{Krog}},
+\author[D]{\fnms{Paul} \snm{Ryan}}
+\runningauthor{B. Esteves et al.}
+\address[A]{IDLab, Ghent University -- imec, Ghent, Belgium}
+\address[B]{ADAPT Centre, Dublin City University, Dublin, Ireland}
+\address[C]{Signatu AS, Oslo, Norway}
+\address[D]{ADAPT Centre, Dublin City University, and Uniphar PLC, Dublin, Ireland}
+
 \begin{abstract}
 abstract
 \end{abstract}
 
 \begin{keyword}
-GDPR, rights exercise, rights management, DPV, ODRL
+GDPR, rights management, rights exercise, DPV, ODRL
 \end{keyword}
 
 \end{frontmatter}
@@ -86,11 +91,11 @@ The remaining of the article is structured as follows: Section~\ref{sec:sota} pr
 Based on the GDPR provisions for data subject rights identified in Section 2, the following requirements are address in the proposed specification:
 
 \begin{itemize}
-    \item[\textbf{Section 3.1.}] Information about the existence of rights related to personal data processing activities
-    \item[\textbf{Section 3.2.}] Justifications for the exercising of rights
-    \item[\textbf{Section 3.3.}] Notices related to the fulfilment or non-fulfilment of rights
-    \item[\textbf{Section 3.4.}] Records of rights-related activities
-    \item[\textbf{Section 3.5.}] GDPR-related rights requests as machine-executable policies
+    \item[\textbf{Section~\ref{sec:applicable-rights}}] Information about the existence of rights related to personal data processing activities
+    \item[\textbf{Section~\ref{sec:justifications}}] Justifications for the exercising of rights
+    \item[\textbf{Section~\ref{sec:notices}}] Notices related to the fulfilment or non-fulfilment of rights
+    \item[\textbf{Section~\ref{sec:records}}] Records of rights-related activities
+    \item[\textbf{Section~\ref{sec:policies}}] GDPR-related rights requests as machine-executable policies
 \end{itemize}
 
 The specification is available at \url{https://besteves4.github.io/dpv-rights-exercising} and includes examples for each requirement identified above, which are ommitted from this article due to size restrictions.
@@ -103,6 +108,41 @@ In the case of the GDPR, DPV's GDPR extension\footnote{\url{https://w3id.org/dpv
 As such, apart from detailing information about what personal data is being processed, how, where, by whom, and for what purpose, a \texttt{dpv:Process} can also be used to indicate applicable rights.
 Data controllers can use this approach to express which rights apply, including those beyond GDPR, such as the EU’s fundamental rights and rights outlined in other EU regulations or jurisdictions, i.e., the \texttt{dpv:hasScope} property can be used to indicate applicable rights by jurisdiction.
 
+\begin{listing}
+\caption{Associate a process with applicable rights from different jurisdictions.}
+\label{lst:rights}
+\begin{minted}{turtle}
+ex:ProcessEmailForServiceProvision a dpv:Process ;
+    dpv:hasDataController ex:DataController ;
+    dpv:hasPersonalData pd:EmailAddress ;
+    dpv:hasProcessing dpv:Use ;
+    dpv:hasPurpose dpv:ServiceProvision ;
+    dpv:hasScope [
+        dpv:hasLegalBasis eu-gdpr:A6-1-a ;
+        dpv:hasJurisdiction loc:EU ;
+        dpv:hasApplicableLaw legal-eu:law-GDPR ;
+        dpv:hasRight eu-gdpr:A7-3, eu-gdpr:A13, eu-gdpr:A14, eu-gdpr:A15, eu-gdpr:A16, 
+            eu-gdpr:A17, eu-gdpr:A18, eu-gdpr:A20, eu-gdpr:A22, eu-gdpr:A77 ] ;
+    dpv:hasScope [
+        dpv:hasLegalBasis ex:GB-GDPR-consent ;
+        dpv:hasJurisdiction loc:GB ;
+        dpv:hasApplicableLaw legal-gb:law-GDPR, legal-gb:law-DPA ;
+        dpv:hasRight ex:RightOfAccess ] . # not complete, other rights exist
+
+ex:DataController a dpv:DataController .
+
+ex:RightOfAccess a dpv:Right ;
+    skos:broader dpv:DataSubjectRight ;
+    dcterms:description "Right of access to personal data" ;
+    dpv:hasApplicableLaw legal-gb:law-GDPR .
+
+ex:GB-GDPR-consent a dpv:LegalBasis ;
+    skos:broader dpv:Consent ;
+    dcterms:description "Consent given by the data subject" ;
+    dpv:hasApplicableLaw legal-gb:law-GDPR .
+\end{minted}
+\end{listing}
+
 \subsection{Justifications for the exercising of rights}
 \label{sec:justifications}
 
@@ -110,6 +150,128 @@ As a result of the collection of requirements for GDPR rights exercising, a \tex
 Examples of justifications include individual's identity not being verifiable or a request being considered overly excessive or burdensome.
 Justifications can also explain why certain processes are necessary or being delayed, such as the ground to exercise the right to object or requiring additional information to move forward with a process.
 To facilitate the expression of these detailed justifications, this extension introduces concepts that extend DPV's \texttt{Justification} concept.
+% can be reused for other activities, e.g., data breaches
+
+\subsection{Notices related to the fulfilment or non-fulfilment of rights}
+\label{sec:notices}
+
+\begin{listing}
+\caption{Notice of non-fulfillment related to an exercised right to erasure.}
+\label{lst:notice}
+\begin{minted}{turtle}
+ex:RejectRightToErasure a dpv:RightNonFulfilmentNotice ;
+    dcterms:description "Notice of non-fulfillment related to an exercised right to erasure" ;
+    dcterms:issued "2024-09-06"^^xsd:date ;
+    dpv:hasRight eu-gdpr:A17 ;
+    dpv:hasDataController ex:DataController ;
+    dpv:isImplementedByEntity ex:DataController ;
+    foaf:page <https://example.org/DataController/RejectRightToErasure> ;
+    dpv:hasRecipient ex:DataSubject ;
+    dpv:hasStatus dpv:RequestUnfulfilled ;
+    dpv:hasJustification justifications:FreedomOfExpressionImpaired .
+
+ex:DataSubject a dpv:DataSubject .
+\end{minted}
+\end{listing}
+
+\subsection{Records of rights-related activities}
+\label{sec:records}
+
+\begin{listing}
+\caption{Right exercise activity where the data controller requires further action from the data subject to be able to proceed with the request.}
+\label{lst:activity}
+\begin{minted}{turtle}
+ex:SARRequiresAction a dpv:RightExerciseActivity, prov:Activity ;
+    dcterms:description "Data controller requires further action from data subject" ;
+    dcterms:created "2023-11-02T16:09:21"^^xsd:dateTime ;
+    prov:wasAssociatedWith ex:DataController ;
+    dpv:hasDataSubject ex:DataSubject ;
+    dpv:hasStatus dpv:RequestRequiresAction ;
+    dpv:hasJustification justifications:IdentityVerificationFailure ;
+    dpv:hasProcess [
+        dpv:hasPersonalData pd:OfficialID ;
+        dpv:hasProcessing dpv:MakeAvailable ;
+        dpv:hasPurpose dpv:IdentityVerification ;
+        dpv:hasRecipientDataController ex:DataController ;
+        dpv:isImplementedByEntity ex:DataSubject ] .
+\end{minted}
+\end{listing}
+
+\begin{listing}
+\caption{Record maintained by the data controller for a data subject's rights-related requests.}
+\label{lst:record}
+\begin{minted}{turtle}
+ex:catalog-001 a dpv:RightExerciseRecord, dcat:Catalog ;
+    dcterms:description "Record maintained by the data controller for a data subject's rights-related requests" ;
+    dcterms:publisher ex:DataController ;
+    dcterms:created "2023-10-23T08:37:25"^^xsd:dateTime ;
+    dcterms:modified "2023-11-03T08:37:25"^^xsd:dateTime ;
+    dcat:record ex:DS-record ;
+    dcat:catalog ex:request-001, ex:request-002 .
+
+ex:record-001 a dcat:CatalogRecord ;
+    dcterms:description "Metadata about catalog-001" ;
+    foaf:primaryTopic ex:DataSubject ;
+    dcterms:publisher ex:DataController ;
+    dpv:hasDataController ex:DataController ;
+    dpv:hasDataSubject ex:DataSubject ;
+    dcterms:issued "2023-10-23T08:37:25"^^xsd:dateTime .
+
+ex:request-001 a dpv:RightExerciseRecord, dcat:Catalog ;
+    dcterms:description "Record maintained by the data controller for a GDPR Art.15 request" ;
+    dcterms:created "2023-10-23T08:37:25"^^xsd:dateTime ;
+    dcterms:modified "2023-10-25T08:37:25"^^xsd:dateTime ;
+    dpv:hasRight eu-gdpr:A15 ;
+    dpv:hasStatus dpv:RequestFulfilled ;
+    dcat:resource ex:SARequest, ex:SARAcknowledged, ex:SARRejected, ex:SARRequiresAction, 
+        ex:SARActionDelayed, ex:SARActionPerformed, ex:SARAccepted, ex:SARFulfilled .
+
+ex:request-001-series a dcat:DatasetSeries ;
+    dcat:first ex:SARequest ;
+    dcat:last ex:SARFulfilled .
+
+ex:SARAcknowledged a dpv:RightExerciseActivity, dcat:Resource ;
+    dcat:inSeries ex:request-001-series ;
+    dcat:prev ex:SARequest .
+\end{minted}
+\end{listing}
+
+\subsection{GDPR-related rights requests as machine-executable policies}
+\label{sec:policies}
+
+\begin{listing}
+\caption{Request policy to exercise GDPR right to erasure.}
+\label{lst:policy}
+\begin{minted}{turtle}
+ex:delete-request a odrl:Request ;
+    odrl:uid "3456-7890-1234-5678-9012"^^xsd:string ;
+    dcterms:description "Data subject requests data controller to delete their data." ;
+    odrl:obligation ex:DS-delete-data ;
+    odrl:obligation ex:DS-delete-notice .
+
+ex:DS-delete-data a odrl:Duty ;
+    dpv:hasRight eu-gdpr:A17 ;
+    odrl:target ex:DS-data ;
+    odrl:assigner ex:DataSubject ;
+    odrl:assignee ex:DataController ;
+    odrl:action odrl:delete ;
+    odrl:constraint ex:DS-delete-justification .
+
+ex:DS-delete-justification a odrl:Constraint ;
+    odrl:leftOperand dpv:Justification ;
+    odrl:operator odrl:eq ;
+    odrl:rightOperand justifications:NonNecessityObjection .
+
+ex:DS-delete-notice a odrl:Duty ;
+    dpv:hasRight eu-gdpr:A19 ;
+    odrl:action odrl:inform ;
+    odrl:informedParty ex:DataSubject ;
+    odrl:informingParty ex:DataController ;
+    odrl:target ex:DS-RightsRecipientsNotice .
+
+ex:DS-RightsRecipientsNotice a eu-gdpr:RightsRecipientsNotice .
+\end{minted}
+\end{listing}
 
 \section{Conclusions and Future Work}
 \label{sec:conclusions}

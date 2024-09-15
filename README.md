@@ -1,29 +1,22 @@
-## About
+# How to Manage My Data? With Machine-Interpretable GDPR Rights!
 
-The Author support service provides LaTeX style files and `.tex` file templates designed for *IOS Press* book articles.
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13764998.svg)](zenodo.13764998)
 
-## Contents
+The EU GDPR is a landmark regulation that introduced several rights for individual to obtain information and control how their personal data is being processed, as well as receive a copy of it. However, there are gaps in the effective use of rights due to each organisation developing custom methods for rights declaration and management, thereby burdening individuals. Simultaneously, there is a technological gap as there is no single consistent standards-based mechanism that can automate the handling of rights for both organisations and individuals.
+In this article, we present a specification for exercising and managing rights in a machine-interpretable format based on semantic web standards.
+Our approach uses the comprehensive Data Privacy Vocabulary (DPV) to create a streamlined workflow for individuals to understand what rights exist, how and where to exercise them, and for organisations to effectively manage them -- including in complex cases such as identity verification.
+This work pushes the state of the art in GDPR rights management and is crucial for data reuse and rights management under technologically intensive developments, such as Data Spaces.
 
-The following files are given in the repository (or directly in `.zip` archive):
+-----------------------
 
-- `IOS-Book-Article.cls`&mdash;LaTeX style file designed for *IOS Press* book articles. Please do not change them.
-These files are already loaded in the respective template files;
-- `IOS-Book-Article.tmpl`&mdash;the main template file should be used for article preparation;
-- `ios-book-article_LaTeX_Instructions.pdf`&mdash;instructions for the preparation of a
-camera-ready paper in LaTeX. This document contains useful information regarding the structure of your document,
-proper tagging style, layout features, etc.;
-- `ios-book-article.pdf`&mdash;example of the prepared article;
-- `ios-book-article.tex`&mdash;source file of the example;
-- `vancouver.bst`&mdash;BibTeX related file. If your bibliography is structured in the BibTeX format,
-loading your *.bib file and the provided  BibTeX style vancouver.bst allows you to get the final format of the bibliography.
-Please note that the bibtex program should be used to generate the *.bbl file.
+This work is under review at the [37th International Conference on Legal Knowledge and Information Systems​ (JURIX 2024)](https://jurix2024.law.muni.cz).
 
-## Setup
+**Work developed by:**
 
-- Clone the repository or download the `.zip` archive;
-- Read the instructions (`ios-book-article_LaTeX_Instructions.pdf`) for the preparation of your LaTeX document;
-- Copy the template file `IOS-Book-Article.tmpl` to the proper `.tex` file of your manuscript and prepare it.
+[Beatriz Esteves](mailto:beatriz.esteves@ugent.be), IDLab, Ghent University - imec, Ghent, Belgium
 
-## Bug reports
+[Harshvardhan J. Pandit](mailto:me@harshp.com), ADAPT Centre, Dublin City University, Dublin, Ireland
 
-Please submit bug report, issues or feature requests to `latex-support@vtex.lt`.
+Georg P. Krog, Signatu AS, Oslo, Norway
+
+Paul Ryan, ADAPT Centre, Dublin City University, and Uniphar PLC, Dublin, Ireland

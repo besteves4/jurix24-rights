@@ -1,11 +1,4 @@
-% PLEASE USE THIS FILE AS A TEMPLATE FOR THE PUBLICATION 
-% Check file IOS-Book-Article.tex
-%
-
 \documentclass{IOS-Book-Article}     %[seceqn,secfloat,secthm]
-%\usepackage{mathptmx}
-%\usepackage[T1]{fontenc}
-%\usepackage{times}%
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{minted}
@@ -26,15 +19,16 @@
 \setlist[inlineabc,1]{label=\textit{\alph*)}}
 
 \begin{document}
+\pagestyle{plain}
+\pagenumbering{arabic}
 \begin{frontmatter}          % The preamble begins here.
-%
-%\pretitle{}
-\title{Delete My Data! Making GDPR Rights Machine-Interpretable and Exercisable}
-\runningtitle{I Know My Rights! Making GDPR Rights Machine-Interpretable and Exercisable}
-%\subtitle{Making GDPR Rights Machine-Interpretable and Exercisable}
+% \title{Delete My Data! Making GDPR Rights Machine-Interpretable and Exercisable}
+% \runningtitle{I Know My Rights! Making GDPR Rights Machine-Interpretable and Exercisable}
+% \title{How to Control My Data? With Machine-Interpretable GDPR Rights!}
+\title{How to Manage My Data? With Machine-Interpretable GDPR Rights!}
 
 \author[A]{\fnms{Beatriz} \snm{Esteves}
-\thanks{Corresponding Author: Beatriz Esteves, \email{beatriz.esteves@ugent.be}.}},
+\thanks{Corresponding Authors: Beatriz Esteves \email{beatriz.esteves@ugent.be} and Harshvardhan J. Pandit \email{me@harshp.com}}},
 \author[B]{\fnms{Harshvardhan J.} \snm{Pandit}},
 \author[C]{\fnms{Georg P.} \snm{Krog}},
 \author[D]{\fnms{Paul} \snm{Ryan}}
@@ -45,7 +39,10 @@
 \address[D]{ADAPT Centre, Dublin City University, and Uniphar PLC, Dublin, Ireland}
 
 \begin{abstract}
-abstract
+The EU GDPR is a landmark regulation that introduced several rights for individual to obtain information and control how their personal data is being processed, as well as receive a copy of it. However, there are gaps in the effective use of rights due to each organisation developing custom methods for rights declaration and management, thereby burdening individuals. Simultaneously, there is a technological gap as there is no single consistent standards-based mechanism that can automate the handling of rights for both organisations and individuals.
+In this article, we present a specification for exercising and managing rights in a machine-interpretable format based on semantic web standards.
+Our approach uses the comprehensive Data Privacy Vocabulary (DPV) to create a streamlined workflow for individuals to understand what rights exist, how and where to exercise them, and for organisations to effectively manage them -- including in complex cases such as identity verification.
+This work pushes the state of the art in GDPR rights management and is crucial for data reuse and rights management under technologically intensive developments, such as Data Spaces.
 \end{abstract}
 
 \begin{keyword}
@@ -57,26 +54,26 @@ GDPR, rights management, rights exercise, semantic technologies
 \section{Introduction}
 \label{sec:intro}
 
-The General Data Protection Regulation (GDPR)~\cite{gdpr} grants data subjects a set of rights designed to protect their personal data and to ensure that they have greater control over how their data is collected, processed, and used by organizations.
+The General Data Protection Regulation (GDPR)~\cite{gdpr} grants data subjects a set of rights designed to protect their personal data and to ensure that they have greater control over how their data is collected, processed, and used by organisations.
 These rights include the right to access personal data, the right to rectification of inaccurate data, the right to erasure (commonly known as the ``right to be forgotten''), and the right to data portability, which allows individuals to ask for their data to be transferred between data controllers.
 Additionally, the GDPR provides rights to restrict processing, object to data use, and avoid automated decision-making.
-These rights, combined with the transparency and accountability measures imposed on organizations, aim to strike a balance between the interests of data subjects and the legitimate needs of businesses and institutions in the digital age.
+These rights, combined with the transparency and accountability measures imposed on organisations, aim to strike a balance between the interests of data subjects and the legitimate needs of businesses and institutions in the digital age.
 However, despite the comprehensive rights granted to individuals under regulations such as the GDPR, a `technological gap', i.e., a significant lack of efficient tools, for exercising these rights remains~\cite{bernes_enhancing_2022}.
 % some citations for the sentences below would be nice
-Many organizations struggle to provide accessible, user-friendly mechanisms for individuals to manage their personal data, often relying on cumbersome manual processes, which can lead to delays, or even non-compliance.
+Many organisations struggle to provide accessible, user-friendly mechanisms for individuals to manage their personal data, often relying on cumbersome manual processes, which can lead to delays, or even non-compliance.
 For data subjects, the process of requesting access, rectification, or deletion of their data can be time-consuming, unclear, and inconsistent across different platforms.
-Additionally, there is a lack of standardisation in how organizations handle these requests, further complicating the process.
+Additionally, there is a lack of standardisation in how organisations handle these requests, further complicating the process.
 Without more automated and streamlined tools, individuals face unnecessary barriers to effectively controlling their data, undermining the intent of regulations designed to empower them.
 
 In this context, we present a specification to express information regarding rights exercise and management in a machine-interpretable format, using semantic Web standards such as RDF.
 In doing so, we begin to address the automation, interoperability and standardisation challenges identified above, towards enabling the development of tools for assisting individuals and organisations in right exercising activities. 
-Towards achieving this goal, we reuse and extend the Data Privacy Vocabulary~(DPV)~\cite{pandit2024dpv}, which allows the expression of information related to legislative requirements such as the GDPR.
+Towards achieving this goal, we reuse and extend the Data Privacy Vocabulary~(DPV)~\cite{panditCreatingVocabularyData2019,pandit2024dpv}, which allows the expression of information related to legislative requirements such as the GDPR.
 The developed extension provides a taxonomy to enable representing justifications associated with the non-fulfilment, non-requirement, delays, and exercising of processes, including rights exercising.
-Beyond DPV, the contributions in this article also promote the usage of the Open Digital Rights Language (ODRL)~\cite{iannella_odrl_2018}, Data Catalog (DCAT)~\cite{albertoni_dcat_2024}, DCMI Metadata~\cite{dcmi_2020}, and provenance (PROV)~\cite{lebo_prov_2013} ontologies to express information about 
-(i) linking personal data processing activities to applicable rights,
-(ii) providing notices related to said rights,
-(iii) documenting the exercise of rights, and
-(iv) GDPR rights requests.
+Beyond DPV, the contributions in this article also promote the usage of the Open Digital Rights Language (ODRL)~\cite{iannella_odrl_2018}, Data Catalog (DCAT)~\cite{albertoni_dcat_2024}, DCMI Metadata~\cite{dcmi_2020}, and provenance (PROV)~\cite{lebo_prov_2013} ontologies to express information about: 
+(1) Linking personal data processing activities to applicable rights,
+(2) Providing notices related to said rights,
+(3) Documenting the exercise of rights, and
+(4) GDPR rights requests.
 The resulting specification is being developed in the context of the W3C Data Privacy Vocabularies and Controls Community Group (DPVCG).
 
 The remaining of the article is structured as follows: Section~\ref{sec:sota} provides background information on GDPR's data subject rights and existing semantic technologies for rights management, Section~\ref{sec:rights} presents the developed specification to express applicable rights, notices, records of activities and rights requests, and Section~\ref{sec:conclusions} concludes and presents future directions of work.
@@ -99,13 +96,13 @@ Even though the existence of these rights has been brought forward has a huge st
 An exception to this statement might be the `Data Rights Protocol'\footnote{\url{https://datarightsprotocol.org}}, developed by Consumer Reports Innovation Lab\footnote{\url{https://innovation.consumerreports.org}}, which ``defines a web protocol encoding a set of standardized request/response data flows such that Users can exercise Personal Data Rights provided under regulations like the California Consumer Privacy Act, General Data Protection Regulation, and other regulatory or voluntary bases, and receive affirmative responses in standardized formats''\footnote{From \url{https://github.com/consumer-reports-innovation-lab/data-rights-protocol}}.
 It does not however cover all GDPR rights and does not promote the usage of standard vocabularies to record information about rights being exercised.
 Since semantic technologies promote interoperability, allowing information and its interpretability to be consistently defined across different platforms, improving the discoverability, management, and preservation of resources, we will promote the usage of semantic Web standards for the definition of a specification to express rights exercisement and management.
-As such, DPV\footnote{Preferred namespace and prefix are \url{https://w3id.org/dpv\#} and \texttt{dpv}.}\cite{pandit2024dpv} is the main driver of the specification presented in this work, as it is the most comprehensive data protection-related vocabulary, providing a set of taxonomies for the expression of metadata related to the usage of personal data aligned with legal requirements, e.g., the GDPR.
+As such, DPV\footnote{\url{https://w3id.org/dpv}; prefixed as  \texttt{dpv}}\cite{panditCreatingVocabularyData2019,pandit2024dpv} is the main driver of the specification presented in this work, as it is the most comprehensive data protection-related vocabulary, providing a set of taxonomies for the expression of metadata related to the usage of personal data aligned with legal requirements, e.g., the GDPR.
 Additionally, the usage of 
-ODRL\footnote{Preferred namespace and prefix are \url{http://www.w3.org/ns/odrl/2/} and \texttt{odrl}.}\cite{iannella_odrl_2018}, 
-DCAT\footnote{Preferred namespace and prefix are \url{http://www.w3.org/ns/dcat\#} and \texttt{dcat}.}\cite{albertoni_dcat_2024}, and 
-PROV-O\footnote{Preferred namespace and prefix are \url{http://www.w3.org/ns/prov\#} and \texttt{prov}.}\cite{lebo_prov_2013}, 
+ODRL\footnote{\url{http://www.w3.org/ns/odrl/2/} prefixed as  \texttt{odrl}}\cite{iannella_odrl_2018}, 
+DCAT\footnote{\url{http://www.w3.org/ns/dcat} prefixed as \texttt{dcat}}\cite{albertoni_dcat_2024}, and 
+PROV-O\footnote{\url{http://www.w3.org/ns/prov} prefixed as \texttt{prov}}\cite{lebo_prov_2013}, 
 which are Web standards developed and maintained by the W3C, is also promoted to express information about policies, catalogs of resources and activity provenance information, respectively.
-The DCMI Metadata Terms standard\footnote{Preferred namespace and prefix are \url{http://purl.org/dc/terms/} and \texttt{dcterms}.}\cite{dcmi_2020}, recommended to be used for metadata-keeping by other other Web standards, including ODRL and DCAT, is also reused.
+The DCMI Metadata Terms standard\footnote{\url{http://purl.org/dc/terms/} prefixed as \texttt{dcterms}}\cite{dcmi_2020}, recommended to be used for metadata-keeping by other other Web standards, including ODRL and DCAT, is also reused.
 
 \section{Rights Exercise and Management}
 \label{sec:rights}
@@ -118,19 +115,19 @@ Based on the GDPR provisions for data subject rights identified in Section~\ref{
     \item[(\textit{Section~\ref{sec:records}})] records of rights-related activities, and
     \item[(\textit{Section~\ref{sec:policies}})] GDPR-related rights requests as machine-executable policies.
 \end{inlineabc}
-The work is publicly available\footnote{Accessible at  \url{https://besteves4.github.io/dpv-rights-exercising}.} and includes examples for each requirement identified above, which are omitted from this article due to size restrictions.
+The work is publicly available\footnote{Accessible at  \url{https://besteves4.github.io/dpv-rights-exercising}} and includes examples for each requirement identified above, which are omitted from this article due to size restrictions.
 
 \subsection{Applicable Data Subject Rights}
 \label{sec:applicable-rights}
 
 Beyond jurisdiction-dependence, applicable data subject rights also depend on the legal ground used to process personal data.
-In the case of the GDPR, DPV's GDPR extension\footnote{Preferred namespace and prefix are \url{https://w3id.org/dpv/legal/eu/gdpr\#} and \texttt{eu-gdpr}.} contains the terms to represent the rights available under GDPR, as well as a mapping of which rights are applicable based on the used legal basis.
+In the case of the GDPR, DPV's GDPR extension\footnote{\url{https://w3id.org/dpv/legal/eu/gdpr} prefixed as \texttt{eu-gdpr}} contains the terms to represent the rights available under GDPR, as well as a mapping of which rights are applicable based on the used legal basis.
 As such, apart from detailing information about what personal data is being processed, how, where, by whom, and for what purpose, a \texttt{dpv:Process} can also be used to indicate applicable rights.
 Data controllers can use this approach to express which rights apply, including those beyond GDPR, such as the EU’s fundamental rights and rights outlined in other EU regulations or jurisdictions, i.e., the \texttt{dpv:hasScope} property can be used to indicate applicable rights by jurisdiction.
 Listing~\ref{lst:rights} highlights the modeling of a personal data process using DPV, where \texttt{dpv:hasScope} is used to express existing rights under EU's GDPR when data is processed based on consent and its similar UK-based counterpart.
 
 \begin{listing}[ht]
-\caption{Associate a process with applicable rights from different jurisdictions.}
+\caption{Associate a process with applicable rights from different jurisdictions}
 \label{lst:rights}
 \begin{minted}{turtle}
 ex:ProcessEmailForServiceProvision a dpv:Process ;
@@ -165,7 +162,7 @@ ex:GB-GDPR-consent a dpv:LegalBasis ; skos:broader dpv:Consent ;
 \subsection{Justifications for the exercising of rights}
 \label{sec:justifications}
 
-As a result of the collection of requirements for GDPR rights exercising, a \texttt{Justification} taxonomy\footnote{Preferred namespace and prefix are \url{https://w3id.org/dpv/justifications\#} and \texttt{justifications}.}, to provide reasons or explanations related to the fulfilment, non-fulfilment, delay and exercise of rights, was developed.
+As a result of the collection of requirements for GDPR rights exercising, a \texttt{Justification} taxonomy\footnote{\url{https://w3id.org/dpv/justifications} prefixed as \texttt{justifications}}, to provide reasons or explanations related to the fulfilment, non-fulfilment, delay and exercise of rights, was developed.
 Examples of justifications include individual's identity not being verifiable or a request being considered overly excessive or burdensome.
 Justifications can also explain why certain processes are necessary or being delayed, such as the ground to exercise the right to object or requiring additional information to move forward with a process.
 To facilitate the expression of these detailed justifications, this extension introduces concepts that extend DPV's \texttt{Justification} concept.
@@ -179,20 +176,21 @@ DPV’s \texttt{isExercisedAt} property can be used to link rights to specific e
 In addition to the properties mentioned earlier, DCMI's concepts can be reused to indicate temporal and other metadata information related to notices.
 Table~\ref{tab:dcterms} summarises the terms reused from DCMI throughout this specification.
 The notices should also provide information about the data controller, as well as the entity responsible for implementing the notice.
-This could be the data controller or another entity acting on their behalf, represented using \texttt{dpv:hasDataController} and \texttt{dpv:isImplementedByEntity}, respectively. Additionally, \texttt{foaf:page}\footnote{FOAF's vocabulary namespace and prefix are \url{http://xmlns.com/foaf/0.1/} and \texttt{foaf}.} can be used to reference a document, such as a Webpage, that contains the full details of the notice and offers further functionalities.
+This could be the data controller or another entity acting on their behalf, represented using \texttt{dpv:hasDataController} and \texttt{dpv:isImplementedByEntity}, respectively. Additionally, \texttt{foaf:page}\footnote{\url{http://xmlns.com/foaf/0.1/} prefixed as \texttt{foaf}} can be used to reference a document, such as a Webpage, that contains the full details of the notice and offers further functionalities.
 
 \begin{table}[ht]
     \centering\fontsize{7}{8}
-    \begin{tabular}{c|c}
+    \begin{tabular}{|c|c|}
+        \hline
         \textbf{\texttt{dcterms} Concepts} & \textbf{Usage} \\ \hline\hline
         \texttt{created},\texttt{issued},\texttt{modified} & Date of creation, issuance or modification of a notice \\ \hline
         \texttt{description} & Description of a notice \\ \hline
         \texttt{identifier} & Identifier of a notice \\ \hline
         \texttt{language} & Language in which the notice is provided \\ \hline
         \texttt{publisher} & Entity responsible for making the notice available \\ \hline
-        \texttt{valid} & Date of validity of a notice \\
+        \texttt{valid} & Date of validity of a notice \\ \hline
     \end{tabular}
-    \caption{List of terms reused from the DCMI Metadata Terms vocabulary~\cite{dcmi_2020}.}
+    \caption{List of terms reused from the DCMI Metadata Terms vocabulary~\cite{dcmi_2020}}
     \label{tab:dcterms}
 \end{table}
 
@@ -202,7 +200,7 @@ Listing~\ref{lst:notice} provides an example of a non-fulfilment notice, where t
 For GDPR-specific notices, DPV's GDPR extension offers concepts for both direct and indirect data collection notices, as required by Articles 13 and 14, respectively, and it also includes Subject Access Request (SAR) notices to fulfil the GDPR Right of Access, and recipient notices to meet the notification requirements of Article 19.
 
 \begin{listing}[ht]
-\caption{Notice of non-fulfillment related to an exercised right to erasure.}
+\caption{Notice of non-fulfillment related to an exercised right to erasure}
 \label{lst:notice}
 \begin{minted}{turtle}
 ex:RejectRightToErasure a dpv:RightNonFulfilmentNotice ;
@@ -238,7 +236,7 @@ The right exercising activities related to these requests are grouped and organi
 Using the \texttt{dcat:last} property, the most recent activity for each request can be easily retrieved.
 
 \begin{listing}[ht]
-\caption{Record maintained by the data controller for a data subject's rights-related requests.}
+\caption{Record maintained by the data controller for a rights requests}
 \label{lst:record}
 \begin{minted}{turtle}
 ex:catalog-001 a dpv:RightExerciseRecord, dcat:Catalog ;
@@ -283,10 +281,10 @@ If rejected, the entity may require additional actions from the requester (e.g.,
 After the required action is taken, the request may either be accepted for fulfilment, rejected again, or further action may be requested.
 
 \begin{figure}[ht]
-\caption{Lifecycle of DPV's concepts to model the status of a request.}
+\caption{Lifecycle of Rights Request - modelled as \texttt{Status} concepts in DPV \cite{pandit2024dpv}}
 \label{fig:status}
 \centering
-\includegraphics[width=0.7\textwidth]{img/request-status.png}
+\fbox{\includegraphics[width=\textwidth]{img/request-status.png}}
 \end{figure}
 
 Moreover, DPV concepts can be combined with the W3C's PROV-O recommendation to track the provenance of a right exercising activity instance.
@@ -297,7 +295,7 @@ Examples for the whole lifecycle of activities are provided in the proposed spec
 Furthermore, the proposed model for right exercising activities is generic enough to support the representation of rights from other jurisdictions and can be easily extended if the need arises.
 
 \begin{listing}[ht]
-\caption{Right exercise activity where the data controller requires further action from the data subject to be able to proceed with the request.}
+\caption{Right exercise activity where the data controller requires further action from the data subject to be able to proceed with the request}
 \label{lst:activity}
 \begin{minted}{turtle}
 ex:SARRequiresAction a dpv:RightExerciseActivity, prov:Activity ;
@@ -330,7 +328,7 @@ These grounds can be detailed using DPV's justifications, e.g., the data is no l
 Additionally, Article 19 requires that if the data has been shared with recipients, the data controller must inform the data subject about these recipients.
 
 \begin{listing}[ht]
-\caption{Request policy to exercise GDPR right to erasure.}
+\caption{Request policy to exercise GDPR right to erasure}
 \label{lst:policy}
 \begin{minted}{turtle}
 ex:delete-request a odrl:Request ;
@@ -366,11 +364,19 @@ ex:DS-RightsRecipientsNotice a eu-gdpr:RightsRecipientsNotice .
 \section{Conclusions and Future Work}
 \label{sec:conclusions}
 
-In this article, we proposed a semantic specification for representing information about rights exercisement and management based on the requirements of the GDPR.
-The specification provides a machine-interpretable and executable model to represent information regarding data subject rights, concepts to justify their fulfilment or non-fulfilment, notices to communicate about them with other entities, records for auditing and policies for automated execution of responses to rights requests.
-Through these, we hope to enable related tools and processes to handle obligations related to rights in an interoperable manner. 
+This article provides a machine-interpretable and executable model to represent information regarding data subject rights, concepts to justify their fulfilment or non-fulfilment, notices to communicate about them with other entities, records for auditing and policies for automated execution of responses to rights requests based on the GDPR. Through these, we hope to enable related tools and processes to handle obligations related to rights in an interoperable manner.
 
-\bibliography{ref}
+We believe our proposal provides a crucially missing technological piece that is required to make effective use of GDPR rights across different services and devices that utilise the Web. The Data Privacy Vocabulary (DPV), which is a central component of our rights management specification, is a comprehensive and growing resource that is being actively developed, has been used by industry and academic projects, and involves inputs from a diverse range of stakeholders. More importantly, the development of DPV -- and the rights management concepts presented here -- involves engagement with legal experts who validate its use as per legal requirements under GDPR, and discussions with Data Protection Officers\footnote{The author Paul Ryan is a functioning DPO for several companies} and implement legal compliance platforms\footnote{The author Georg P. Krog is the chief legal counsel for Signatu -- which uses DPV to provide GDPR compliance solutions} who provide practical grounding for ensuring this work is effective.
+
+To realise the potential of our work, it is important for the rights management specification to be seen as \textit{useful} and \textit{effective} by organisations and legal authorities so as to enable its uptake. To enable its technical adoption, one option is to integrate this work with protocols such as the Data Rights Protocol which creates a single consistent technical signalling mechanism for rights management on the Web. Another option is to utilise existing EU-friendly mechanisms such as the Advanced Data Protection Control\footnote{https://www.dataprotectioncontrol.org/spec/} (ADPC), which have rights management in their scope but lack the technical implementation -- which this work can provide. 
+
+Finally, we highlight the importance of this work in developing ecosystems based on the Data Governance Act (DGA), Data Act, and the Data Spaces regulations, where data reuse will be based on technical infrastructures.
+% In such ecosystems, having a way to manage rights in a machine-interpretable way is important to reduce the human overload and increase efficiency of legal compliance processes. Our technical specification is forwards compatible as it supports adding more information, workflows, and requirements from these as well as future regulations based on the adaptability of the DPV and the underlying design decisions.
+Additionally, the EU Commission has launched an ambitious program\footnote{\url{https://digital-strategy.ec.europa.eu/en/news/eu-digital-identity-4-projects-launched-test-eudi-wallet}} consisting of creating a secure European Digital Identity wallet (EUDI) which will be used by individuals and organisations to assert their identity and access public/private services based on personal data stored in the wallets.
+While work on how to store and manage consent in such wallets based on standards has already been explored~\cite{pandit2024implementing}, the question of how such wallets can facilitate rights exercise has not been explored. 
+The work presented in this article provides the technical basis for creating a GDPR-compliant by design rights management infrastructure that Data Spaces or EUDI wallets can utilise for individuals and organisations to exercise and manage rights in a consistent standardised and interoperable manner. This not only facilitates GDPR compliance, but also creates a streamlined experience for users and promotes transparency and accountability.
+
+\bibliography{paper}
 \bibliographystyle{vancouver}
 
 \end{document}

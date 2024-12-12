@@ -9,7 +9,10 @@ This work pushes the state of the art in GDPR rights management and is crucial f
 
 -----------------------
 
-This work is under review at the [37th International Conference on Legal Knowledge and Information Systems​ (JURIX 2024)](https://jurix2024.law.muni.cz).
+This work is accepted and will be presented at the [37th International Conference on Legal Knowledge and Information Systems​ (JURIX 2024)](https://jurix2024.law.muni.cz).
+
+
+Presentation: [Web slides](https://docs.google.com/presentation/d/1YmlxfdfZ8kHZwrrKwwbd9Rq03IlvPl7V4qFeWio72ho/edit#slide=id.g31e17858147_0_119) | [PDF](JURIX24%20-%20rights.pdf)
 
 **Work developed by:**
 
